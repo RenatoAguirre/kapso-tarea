@@ -17,6 +17,26 @@ const TrainingList: React.FC<TrainingListProps> = ({ trainings }) => {
     );
   };
 
+  const handleExportToJson = (training: Training) => {
+    const dataToExport = {
+      id: training.id,
+      name: training.name,
+      exercises: training.exercises,
+    };
+
+    const jsonBlob = new Blob([JSON.stringify(dataToExport, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(jsonBlob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${training.name || "training"}.json`;
+    link.click();
+
+    URL.revokeObjectURL(url); // Cleanup the URL
+  };
+
   const calculateMaxWeight = (exercises: Exercise[]) => {
     return exercises.reduce(
       (max, exercise) => (exercise.weight > max ? exercise.weight : max),
@@ -69,6 +89,13 @@ const TrainingList: React.FC<TrainingListProps> = ({ trainings }) => {
               <strong>Peso Máximo:</strong>{" "}
               {calculateMaxWeight(training.exercises)} kg
             </p>
+            <button
+              type="button"
+              onClick={() => handleExportToJson(training)}
+              className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 w-full"
+            >
+              Exportar como JSON
+            </button>
           </div>
         </div>
       ))}

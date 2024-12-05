@@ -66,12 +66,14 @@ const TrainingForm: React.FC<TrainingFormProps> = ({ onAddTraining }) => {
             </div>
           ))}
         </div>
-        <button
-          type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 w-full"
-        >
-          Guardar Entrenamiento
-        </button>
+        <div className="space-y-2">
+          <button
+            type="submit"
+            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 w-full"
+          >
+            Guardar Entrenamiento
+          </button>
+        </div>
       </form>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ExerciseForm
